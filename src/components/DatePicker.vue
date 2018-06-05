@@ -77,7 +77,7 @@ export default {
                 }else{
                     date = momnet(this.firstDate.join('-')).add((i-day),'days');
                 }
-                list.push([date.format('YYYY'),date.format('MM'),date.format('DD')]);
+                list.push(date.format('YYYY-MM-DD').split('-'));
             }
             this.dateArray = list;
         },
