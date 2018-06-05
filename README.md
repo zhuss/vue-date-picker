@@ -2,7 +2,7 @@
 
 > A Vue.js project
 
-## 如何在项目中使用方法
+## 如何在项目中使用
 
 ``` javascript
 //npm / yarn
