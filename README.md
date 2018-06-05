@@ -2,6 +2,32 @@
 
 > A Vue.js project
 
+## 如何在项目中使用方法
+
+``` javascript
+//npm / yarn
+yarn add https://github.com/zhuss/vue-date-picker.git
+
+//javascript
+import DatePicker from 'vue-date/src/components/DatePicker.vue'
+
+export default {
+	components:{ 
+		DatePicker
+	},
+	data(){
+		return {
+			date:'2018-06-05'
+		}
+	}
+}
+
+// template
+<date-picker v-model="date"></date-picker>
+
+```
+
+
 ## Build Setup
 
 ``` bash
