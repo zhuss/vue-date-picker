@@ -53,7 +53,7 @@ export default {
     props:{
         value:{
             type:String,
-            default:'1970-01-01'
+            default:'1990-01-15' //生日
         }
     },
     data(){
