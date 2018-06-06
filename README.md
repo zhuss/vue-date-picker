@@ -1,4 +1,4 @@
-# vue-date
+# z-date-picker
 
 > A Vue.js project
 
@@ -11,7 +11,7 @@ yarn add z-date-picker
 npm install z-date-picker --save
 
 //javascript
-import DatePicker from 'vue-date/src/components/DatePicker.vue'
+import DatePicker from 'z-date-picker'
 
 export default {
 	components:{ 
