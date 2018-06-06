@@ -8,6 +8,9 @@
     <div class="demo-box">
       <button class="button" type="button" @click="submitClick">确定</button>
     </div>
+    <div class="demo-box">
+      <p>当前选日期:{{date}}</p>
+    </div>
   </div>
 </template>
 

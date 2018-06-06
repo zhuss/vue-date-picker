@@ -58,7 +58,7 @@ export default {
         return {
             currentValue:'', //当前值
             zIndex:-1,
-            isShow:true,
+            isShow:false,
             select:'date',
             weekArray:['日','一','二','三','四','五','六'],
             currentDate:[], //当前日期
