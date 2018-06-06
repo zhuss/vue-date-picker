@@ -75,8 +75,8 @@ export default {
     methods:{
         //初始化值
         initData(){
-            this.currentValue = this.value;
-            this.currentDate = this.value.split('-');
+            this.currentValue = this.value||momnet().format('YYYY-MM-DD');
+            this.currentDate = this.currentValue.split('-');
             this.firstDate = momnet(this.currentDate.join('-')).startOf('month').format('YYYY-MM-DD').split('-');
             this.getDateArray();
             this.getYearArray();

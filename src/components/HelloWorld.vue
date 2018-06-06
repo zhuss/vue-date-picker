@@ -24,7 +24,7 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      date:'2018-06-05'
+      date:''
     }
   },
   watch:{
