@@ -1,6 +1,6 @@
 <template>
     <div class="zss-date-picker">
-        <input class="zss-date-input" type="text" readonly v-model="currentValue" @focus="inputFocus" />
+        <input class="zss-date-input" type="text" placeholder="请选择日期" readonly v-model="currentValue" @focus="inputFocus" />
         <transition name="fade">
         <div class="zss-picker-model" @click.self="modelClick" v-show="isShow" :style="{'z-index':zIndex}">
             <div class="zss-panel">
@@ -75,8 +75,8 @@ export default {
     methods:{
         //初始化值
         initData(){
-            this.currentValue = this.value||momnet().format('YYYY-MM-DD');
-            this.currentDate = this.currentValue.split('-');
+            this.currentValue = this.value;
+            this.currentDate = (this.value||momnet().format('YYYY-MM-DD')).split('-');
             this.firstDate = momnet(this.currentDate.join('-')).startOf('month').format('YYYY-MM-DD').split('-');
             this.getDateArray();
             this.getYearArray();

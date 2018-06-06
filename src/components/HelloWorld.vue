@@ -27,14 +27,9 @@ export default {
       date:''
     }
   },
-  watch:{
-    date(val){
-      console.log(val);
-    }
-  },
   methods:{
     submitClick(){
-      console.log(this.date);
+      alert(this.date);
     }
   }
 }
