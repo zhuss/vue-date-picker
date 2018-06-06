@@ -7,9 +7,11 @@
                 <!-- header -->
                 <div class="zss-panel-header">
                     <div class="zss-date-year">
-                        <div class="zss-date-prev zss-text-hover" @click="prevYear">＜</div>
+                        <div class="zss-date-prev zss-text-disabled" v-if="select=='year'">＜</div>
+                        <div class="zss-date-prev zss-text-hover" v-else @click="prevYear">＜</div>
                         <div class="zss-date-text zss-text-hover" @click="select='year'">{{firstDate[0]}}</div>
-                        <div class="zss-date-next zss-text-hover" @click="nextYear">＞</div>
+                        <div class="zss-date-next zss-text-disabled" v-if="select =='year'">＞</div>
+                        <div class="zss-date-next zss-text-hover" v-else @click="nextYear">＞</div>
                     </div>
                     <div class="zss-date-month">
                         <div class="zss-date-prev zss-text-hover" @click="prevMonth">＜</div>
@@ -289,6 +291,9 @@ export default {
 }
 .zss-text-hover:hover{
     color: #25b864;
+}
+.zss-text-disabled{
+    color: #E6E6E6;
 }
 .zss-panel-body{
    padding:20px 30px;
