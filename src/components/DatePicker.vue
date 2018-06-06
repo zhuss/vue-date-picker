@@ -53,7 +53,7 @@ export default {
     props:{
         value:{
             type:String,
-            default:'1990-01-15' //生日
+            default:'1990-01-15' //生日 联系我可＋QQ:503305196
         }
     },
     data(){
