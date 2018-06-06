@@ -2,13 +2,13 @@
     <div class="zss-date-picker">
         <input class="zss-date-input" type="text" readonly v-model="currentValue" @focus="inputFocus" />
         <transition name="fade">
-        <div class="zss-picker-model" @click.self="modelClick" v-show="isShow">
+        <div class="zss-picker-model" @click.self="modelClick" v-show="isShow" :style="{'z-index':zIndex}">
             <div class="zss-panel">
                 <!-- header -->
                 <div class="zss-panel-header">
                     <div class="zss-date-year">
                         <div class="zss-date-prev zss-text-hover" @click="prevYear">＜</div>
-                        <div class="zss-date-text zss-text-hover">{{firstDate[0]}}</div>
+                        <div class="zss-date-text zss-text-hover" @click="select='year'">{{firstDate[0]}}</div>
                         <div class="zss-date-next zss-text-hover" @click="nextYear">＞</div>
                     </div>
                     <div class="zss-date-month">
@@ -20,10 +20,25 @@
                 <!-- /header -->
                 
                 <div class="zss-panel-body">
-                    <div class="zss-date-week">
+                    <!-- 年 -->
+                    <div class="zss-year-box" v-show="select=='year'">
+                        <div class="zss-year" :class="{'zss-year-now':item==firstDate[0]}" v-for="item in yearList" @click="clickYear(item)">{{item}}</div>
+                    </div>
+                    <!-- /年 -->
+                    <div class="zss-year-control" v-show="select=='year'">
+                        <div class="zss-control-prev" @click="prevYears">＜</div>
+                        <div class="zss-control-next" @click="nextYears">＞</div>
+                    </div>
+                    <!-- 周标题 -->
+                    <div class="zss-date-week" v-show="select=='date'">
                         <div class="zss-week" v-for="item in weekArray">{{item}}</div>
                     </div>
-                    <div class="zss-date" :class="{'zss-date-now':isNow(item),'zss-month-now':isMonth(item)}" v-for="item in dateArray" @click="clickDate(item)">{{item[2]}}</div>
+                    <!-- /周标题 -->
+                    <!-- 日期-->
+                    <div class="zss-date-box" v-show="select=='date'">
+                        <div class="zss-date" :class="{'zss-date-now':isNow(item),'zss-month-now':isMonth(item)}" v-for="item in dateArray" @click="clickDate(item)">{{item[2]}}</div>
+                    </div>
+                    <!--/日期-->
                 </div>                
             </div>
         </div>
@@ -42,12 +57,14 @@ export default {
     data(){
         return {
             currentValue:'', //当前值
-            zIndex:1,
-            isShow:false,
+            zIndex:-1,
+            isShow:true,
+            select:'date',
             weekArray:['日','一','二','三','四','五','六'],
             currentDate:[], //当前日期
             dateArray:[],  //当月日期列表
-            firstDate:[]  //当月1号
+            firstDate:[],  //当月1号
+            yearList:[] //当前年列表
         }
     },
     mounted(){
@@ -60,11 +77,20 @@ export default {
             this.currentDate = this.value.split('-');
             this.firstDate = momnet(this.currentDate.join('-')).startOf('month').format('YYYY-MM-DD').split('-');
             this.getDateArray();
+            this.getYearArray();
+            this.getIndex();
         },
         //获取当前页面的最大Index
         getIndex(){
+            let zIndex = -1;
             let array = [...document.all];
-            console.log(array);
+            for(let i = 0; i < array.length; i++){
+                let index = window.getComputedStyle(array[i], null).zIndex;
+                if(index!='auto'&& index > zIndex){
+                    zIndex =  parseInt(index);
+                }
+            }
+            this.zIndex = zIndex+1;
         },
         //获取当前显示日期列表
         getDateArray(){
@@ -80,6 +106,15 @@ export default {
                 list.push(date.format('YYYY-MM-DD').split('-'));
             }
             this.dateArray = list;
+        },
+        //获取当前年列表
+        getYearArray(){
+             let year = this.firstDate[0];
+            let yearList = [];
+            for(let i = 0; i < 15; i++){
+                yearList.push(year-7+i);
+            }
+            this.yearList = yearList;
         },
         //获取焦点
         inputFocus(){
@@ -145,6 +180,29 @@ export default {
         nextYear(){
             let nextYearDate = momnet(this.firstDate.join('-')).startOf('month').add(1,'year');
             this.firstDate = nextYearDate.format('YYYY-MM-DD').split('-');
+            this.getDateArray();
+        },
+        //点击上一列表年
+        prevYears(){
+            let yearList = [];
+            for(let i = 0; i < this.yearList.length; i++){
+                yearList.push(this.yearList[i]-15);
+            }
+            this.yearList = yearList;
+        },
+        //点击下一列表
+        nextYears(){
+            let yearList = [];
+            for(let i = 0; i < this.yearList.length; i++){
+                yearList.push(this.yearList[i]+15);
+            }
+            this.yearList = yearList;
+        },
+        //点击年
+        clickYear(item){
+            let firstDate = this.firstDate;
+            firstDate.splice(0,1,item+'');
+            this.select = 'date';
             this.getDateArray();
         }
     }
@@ -265,6 +323,46 @@ export default {
 }
 .zss-date-now:hover{
     color: #FFF;
+}
+.zss-year-box{
+    overflow: hidden;
+}
+.zss-year{
+    float: left;
+    width: 98px;
+    height: 100px;
+    line-height: 100px;
+    cursor: pointer;
+    text-align: center;
+}
+.zss-year:hover{
+    color: #25b864;
+}
+.zss-year-now{
+    background: #25b864;
+    color: #FFF;
+}
+.zss-year-now:hover{
+    color: #FFF;
+}
+.zss-year-control{
+    display: flex;
+    height: 40px;
+    line-height: 40px;
+}
+.zss-control-prev{
+    flex: 1;
+    cursor: pointer;
+}
+.zss-control-prev:hover{
+    color: #25b864;
+}
+.zss-control-next{
+    flex: 1;
+    cursor: pointer;
+}
+.zss-control-next:hover{
+    color: #25b864;
 }
 </style>
 
