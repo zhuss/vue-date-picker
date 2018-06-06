@@ -6,7 +6,9 @@
 
 ``` javascript
 //npm / yarn
-yarn add https://github.com/zhuss/vue-date-picker.git
+yarn add z-date-picker
+或者
+npm install z-date-picker --save
 
 //javascript
 import DatePicker from 'vue-date/src/components/DatePicker.vue'
