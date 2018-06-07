@@ -14,8 +14,9 @@
                         <div class="zss-date-next zss-text-hover" v-else @click="nextYear">＞</div>
                     </div>
                     <div class="zss-date-month">
+
                         <div class="zss-date-prev zss-text-hover" @click="prevMonth">＜</div>
-                        <div class="zss-date-text zss-text-hover">{{firstDate[1]}}</div>
+                        <div class="zss-date-text zss-text-hover" @click="select='month'">{{firstDate[1]}}</div>
                         <div class="zss-date-next zss-text-hover" @click="nextMonth">＞</div>
                     </div>
                 </div>
@@ -24,13 +25,18 @@
                 <div class="zss-panel-body">
                     <!-- 年 -->
                     <div class="zss-year-box" v-show="select=='year'">
-                        <div class="zss-year" :class="{'zss-year-now':item==firstDate[0]}" v-for="item in yearList" @click="clickYear(item)">{{item}}</div>
+                        <div class="zss-year" v-for="item in yearList" @click="clickYear(item)">{{item}}</div>
                     </div>
-                    <!-- /年 -->
                     <div class="zss-year-control" v-show="select=='year'">
                         <div class="zss-control-prev" @click="prevYears">＜</div>
                         <div class="zss-control-next" @click="nextYears">＞</div>
                     </div>
+                    <!-- /年 -->
+                    <!--月-->
+                    <div class="zss-month-box" v-show="select=='month'">
+                        <div class="zss-month" v-for="(item,index) in monthArray" @click="clickMonth(index)">{{item}}</div>
+                    </div>
+                    <!--/月-->
                     <!-- 周标题 -->
                     <div class="zss-date-week" v-show="select=='date'">
                         <div class="zss-week" v-for="item in weekArray">{{item}}</div>
@@ -63,6 +69,7 @@ export default {
             isShow:false,
             select:'date',
             weekArray:['日','一','二','三','四','五','六'],
+            monthArray:['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
             currentDate:[], //当前日期
             dateArray:[],  //当月日期列表
             firstDate:[],  //当月1号
@@ -204,6 +211,14 @@ export default {
         clickYear(item){
             let firstDate = this.firstDate;
             firstDate.splice(0,1,item+'');
+            this.select = 'month';
+            this.getDateArray();
+        },
+        clickMonth(index){
+            let month = index+1;
+            month = month<10?'0'+month:''+month;
+            let firstDate = this.firstDate;
+            firstDate.splice(1,1,month);
             this.select = 'date';
             this.getDateArray();
         }
@@ -343,13 +358,6 @@ export default {
 .zss-year:hover{
     color: #25b864;
 }
-.zss-year-now{
-    background: #25b864;
-    color: #FFF;
-}
-.zss-year-now:hover{
-    color: #FFF;
-}
 .zss-year-control{
     display: flex;
     height: 40px;
@@ -368,6 +376,16 @@ export default {
 }
 .zss-control-next:hover{
     color: #25b864;
+}
+.zss-month-box{
+    overflow: hidden;
+    padding: 30px 0;
+}
+.zss-month{
+    width: 122.5px;
+    height: 50px;
+    float: left;
+    cursor: pointer;
 }
 </style>
 
