@@ -240,6 +240,7 @@ export default {
     height: 40px;
     border: 1px solid #E6E6E6;
     font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
 }
 .zss-date-picker >.zss-date-input{
     width: 100%;
