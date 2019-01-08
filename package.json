@@ -3,7 +3,7 @@
   "version": "1.0.3",
   "description": "A Component for Vue.js",
   "author": "zhushunsheng <503305196@qq.com>",
-  "main":"src/components/DatePicker.vue",
+  "main": "src/components/DatePicker.vue",
   "license": "MIT",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
